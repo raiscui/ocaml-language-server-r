@@ -7,8 +7,9 @@ export default function(
   session: Session,
 ): LSP.RequestHandler<LSP.InitializeParams, LSP.InitializeResult, LSP.InitializeError> {
   return async event => {
+    const overrides: ISettings = { reason: event.initializationOptions };
     (session.initConf as any) = event;
-    session.settings.reason = ISettings.withDefaults(event.initializationOptions).reason;
+    session.settings.reason = ISettings.withDefaults(overrides).reason;
     await session.initialize();
     return { capabilities };
   };

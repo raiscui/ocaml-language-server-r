@@ -72,7 +72,7 @@ export namespace ISettings {
   };
 
   export function withDefaults(overrides: ISettings | undefined | null): ISettings {
-    return deepmerge(defaults, { reason: overrides ? overrides.reason || overrides : {} });
+    return deepmerge(ISettings.defaults, overrides || {});
   }
 }
 
