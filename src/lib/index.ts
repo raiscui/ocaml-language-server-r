@@ -71,8 +71,12 @@ export namespace ISettings {
     },
   };
 
-  export function withDefaults(overrides: ISettings | undefined | null): ISettings {
-    return deepmerge(ISettings.defaults, overrides || {});
+  export function withDefaults(overrides: typeof defaults.reason | undefined | null): typeof defaults.reason {
+    return deepmerge(ISettings.defaults.reason, overrides || {}, {
+      arrayMerge<A>(_: A[], source: A[]): A[] {
+        return source; // overwites arrays (with overrides) instead of merging
+      },
+    });
   }
 }
 
