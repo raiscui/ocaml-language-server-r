@@ -1,5 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`parses a regular syntax error 1`] = `
+Object {
+  "file:///Users/foo/Development/github/jeason/src/parsetree.mli": Array [
+    Object {
+      "code": "",
+      "message": "Syntax error",
+      "range": Object {
+        "end": Object {
+          "character": 24,
+          "line": 759,
+        },
+        "start": Object {
+          "character": 23,
+          "line": 759,
+        },
+      },
+      "severity": 1,
+      "source": "bucklescript",
+    },
+  ],
+}
+`;
+
 exports[`parses messages including "Error while running external preprocessor" 1`] = `
 Object {
   "file:///Users/bla/Development/sandbox/reason-react-hello/src/simple/bla.re": Array [
@@ -187,6 +210,48 @@ Hint: Did you mean patternMatch?
         "start": Object {
           "character": 8,
           "line": 58,
+        },
+      },
+      "severity": 1,
+      "source": "bucklescript",
+    },
+  ],
+}
+`;
+
+exports[`parses two regular errors (i.e. non super-errors format) 1`] = `
+Object {
+  "file:///src/lexer_flow.mll": Array [
+    Object {
+      "code": "",
+      "message": "This expression has type bytes but an expression was expected of type
+         string",
+      "range": Object {
+        "end": Object {
+          "character": 24,
+          "line": 331,
+        },
+        "start": Object {
+          "character": 4,
+          "line": 331,
+        },
+      },
+      "severity": 1,
+      "source": "bucklescript",
+    },
+  ],
+  "file:///src/parser_env.mli": Array [
+    Object {
+      "code": "",
+      "message": "Unbound module Lexer_flow.Token",
+      "range": Object {
+        "end": Object {
+          "character": 27,
+          "line": 28,
+        },
+        "start": Object {
+          "character": 9,
+          "line": 28,
         },
       },
       "severity": 1,

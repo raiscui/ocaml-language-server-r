@@ -9,7 +9,7 @@ export function parseErrors(bsbOutput: string): { [key: string]: LSP.Diagnostic[
   const reLevel1Errors = new RegExp(
     [
       /File "(.*)", line (\d*), characters (\d*)-(\d*):[\s\S]*?/,
-      /(?:Error|Warning \d+): (?:[\s\S]*?)(?:([\s\S]*?)(?:We've found a bug for you!|File ")|(.*?)\n\S)/,
+      /(?:Error|Warning \d+): (?:([\s\S]*?)(?:We've found a bug for you!|File "|ninja: build stopped|\[\d\/\d] Building )|(.*?)\n\S)/,
     ]
       .map(r => r.source)
       .join(""),

@@ -35,3 +35,11 @@ it("parses messages including interface/implementation mismatch", () => {
 it("parses messages including FFI errors with [@bs.send]", () => {
   expect(getDiagnostics("7.txt")).toMatchSnapshot();
 });
+
+it("parses two regular errors (i.e. non super-errors format)", () => {
+  expect(getDiagnostics("8.txt")).toMatchSnapshot();
+});
+
+it("parses a regular syntax error", () => {
+  expect(getDiagnostics("9.txt")).toMatchSnapshot();
+});
