@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import * as lodash from "lodash";
 import * as LSP from "vscode-languageserver-protocol";
 import { merlin } from "../../../lib";
 import * as command from "../command";
@@ -8,7 +8,7 @@ import Session from "./index";
 
 export default class Analyzer implements LSP.Disposable {
   public readonly refreshImmediate: ((event: LSP.TextDocumentIdentifier) => Promise<void>);
-  public readonly refreshDebounced: ((event: LSP.TextDocumentIdentifier) => Promise<void>) & _.Cancelable;
+  public readonly refreshDebounced: ((event: LSP.TextDocumentIdentifier) => Promise<void>) & lodash.Cancelable;
   private readonly bsbDiagnostics: { [key: string]: LSP.Diagnostic[] } = {};
 
   constructor(private readonly session: Session) {}
@@ -36,7 +36,7 @@ export default class Analyzer implements LSP.Disposable {
 
   public onDidChangeConfiguration(): void {
     (this.refreshImmediate as any) = this.refreshWithKind(LSP.TextDocumentSyncKind.Full);
-    (this.refreshDebounced as any) = _.debounce(
+    (this.refreshDebounced as any) = lodash.debounce(
       this.refreshWithKind(LSP.TextDocumentSyncKind.Incremental),
       this.session.settings.reason.debounce.linter,
       { trailing: true },

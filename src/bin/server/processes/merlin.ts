@@ -1,6 +1,6 @@
 import * as async from "async";
 import * as childProcess from "child_process";
-import * as _ from "lodash";
+import * as lodash from "lodash";
 import * as readline from "readline";
 import * as LSP from "vscode-languageserver-protocol";
 import URI from "vscode-uri";
@@ -61,7 +61,7 @@ export default class Merlin implements LSP.Disposable {
       }
       this.readline.question(
         JSON.stringify(task.task),
-        _.flow(JSON.parse, this.logMessage(begunProcessing, task), data => {
+        lodash.flow(JSON.parse, this.logMessage(begunProcessing, task), data => {
           // this.session.connection.console.log(JSON.stringify(data));
           return callback(data);
         }),
