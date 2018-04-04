@@ -1,6 +1,6 @@
 {
   "name": "ocaml-language-server",
-  "version": "1.0.33",
+  "version": "1.0.34",
   "license": "Apache-2.0",
   "description": "OCaml language server",
   "author": {
