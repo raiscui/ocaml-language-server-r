@@ -54,7 +54,7 @@ export namespace ISettings {
         width: null,
       },
       path: {
-        bsb: "bsb",
+        bsb: "./node_modules/bs-platform/lib/bsb.exe",
         env: "env",
         esy: "esy",
         ocamlfind: "ocamlfind",
