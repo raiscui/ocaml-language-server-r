@@ -3,14 +3,17 @@ import { refmt as refmtParser } from "../parser";
 import * as processes from "../processes";
 import Session from "../session";
 
-export async function ocpIndent(session: Session, doc: LSP.TextDocument): Promise<string> {
+export async function ocpIndent(session: Session, doc: LSP.TextDocument): Promise<null | string> {
   const text = doc.getText();
   const ocpIndent = new processes.OcpIndent(session, []).process;
   ocpIndent.stdin.write(text);
   ocpIndent.stdin.end();
-  const otxt = await new Promise<string>((resolve, reject) => {
+  const otxt = await new Promise<null | string>(resolve => {
     let buffer = "";
-    ocpIndent.stdout.on("error", (error: Error) => reject(error));
+    ocpIndent.stdout.on("error", (error: Error) => {
+      session.error(`Error formatting file: ${error}`);
+      resolve(null);
+    });
     ocpIndent.stdout.on("data", (data: Buffer | string) => (buffer += data.toString()));
     ocpIndent.stdout.on("end", () => resolve(buffer));
   });

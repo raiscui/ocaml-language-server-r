@@ -6,5 +6,6 @@ export default class OcpIndent {
   constructor(session: Session, args: string[] = []) {
     const command = "ocp-indent";
     this.process = session.environment.spawn(command, args);
+    this.process.on("error", error => session.error(`Error formatting file: ${error}`));
   }
 }
