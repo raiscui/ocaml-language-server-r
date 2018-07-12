@@ -285,3 +285,6 @@ $RECYCLE.BIN/
 *.lnk
 
 
+.history
+
+package-lock.json

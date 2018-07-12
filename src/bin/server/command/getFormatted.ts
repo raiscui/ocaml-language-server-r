@@ -5,19 +5,28 @@ import Session from "../session";
 
 export async function ocpIndent(session: Session, doc: LSP.TextDocument): Promise<null | string> {
   const text = doc.getText();
-  const ocpIndent = new processes.OcpIndent(session, []).process;
-  ocpIndent.stdin.write(text);
-  ocpIndent.stdin.end();
+  const ocpIndent1 = new processes.OcpIndent(session).process;
+  ocpIndent1.stdin.write(text);
+  ocpIndent1.stdin.end();
   const otxt = await new Promise<null | string>(resolve => {
     let buffer = "";
-    ocpIndent.stdout.on("error", (error: Error) => {
+    let bufferError = "";
+    ocpIndent1.stdout.on("error", (error: Error) => {
       session.error(`Error formatting file: ${error}`);
       resolve(null);
     });
-    ocpIndent.stdout.on("data", (data: Buffer | string) => (buffer += data.toString()));
-    ocpIndent.stdout.on("end", () => resolve(buffer));
+    ocpIndent1.stdout.on("data", (data: Buffer | string) => (buffer += data.toString()));
+    ocpIndent1.stdout.on("end", () => resolve(buffer));
+
+    ocpIndent1.stderr.on("data", (data: Buffer | string) => (bufferError += data.toString()));
+    ocpIndent1.stderr.on("end", () => {
+      session.error("ocpIndent1 error :" + bufferError);
+    });
+
+    session.log("buffer:" + buffer);
   });
-  ocpIndent.unref();
+
+  ocpIndent1.unref();
   return otxt;
 }
 

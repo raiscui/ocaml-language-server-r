@@ -13,5 +13,6 @@ export default class ReFMT {
 
     const args = argsOpt || ["--parse", "re", "--print", "re", "--interface", `${/\.rei$/.test(uri)}`].concat(widthArg);
     this.process = session.environment.spawn(command, args);
+    this.process.on("error", error => session.error(`refmt Error formatting file: ${error}`));
   }
 }
