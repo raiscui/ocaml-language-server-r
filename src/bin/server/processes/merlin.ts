@@ -61,10 +61,14 @@ export default class Merlin implements LSP.Disposable {
       }
       this.readline.question(
         JSON.stringify(task.task),
-        lodash.flow(JSON.parse, this.logMessage(begunProcessing, task), data => {
-          // this.session.connection.console.log(JSON.stringify(data));
-          return callback(data);
-        }),
+        lodash.flow(
+          JSON.parse,
+          this.logMessage(begunProcessing, task),
+          data => {
+            // this.session.connection.console.log(JSON.stringify(data));
+            return callback(data);
+          },
+        ),
       );
     };
     (this.queue as any) = async.priorityQueue(worker, 1);

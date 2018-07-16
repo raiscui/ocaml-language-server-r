@@ -48,7 +48,7 @@ export default class Synchronizer implements LSP.Disposable {
     languageId: string,
     content: string,
   ): Promise<void> {
-    this.documents.set(document.uri, LSP.TextDocument.create(document.uri, languageId, document.version, content));
+    this.documents.set(document.uri, LSP.TextDocument.create(document.uri, languageId, document.version || 0, content));
     const request = merlin.Sync.tell("start", "end", content);
     await this.session.merlin.sync(request, document);
   }
@@ -64,7 +64,7 @@ export default class Synchronizer implements LSP.Disposable {
     if (null != newContent) {
       this.documents.set(
         newDocument.uri,
-        LSP.TextDocument.create(oldDocument.uri, oldDocument.languageId, newDocument.version, newContent),
+        LSP.TextDocument.create(oldDocument.uri, oldDocument.languageId, newDocument.version || 0, newContent),
       );
     }
 

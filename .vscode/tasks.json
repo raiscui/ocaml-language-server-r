@@ -18,7 +18,17 @@
         "focus": false,
         "panel": "dedicated"
       },
-      "problemMatcher": ["$tslint5", "$tsc"]
+      "problemMatcher": [
+        "$tslint5",
+        "$tsc"
+      ]
+    },
+    {
+      "type": "npm",
+      "script": "lint",
+      "problemMatcher": [
+        "$eslint-compact"
+      ]
     }
   ]
 }
