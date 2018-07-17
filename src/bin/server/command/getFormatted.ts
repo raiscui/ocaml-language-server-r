@@ -20,10 +20,10 @@ export async function ocpIndent(session: Session, doc: LSP.TextDocument): Promis
 
     ocpIndent1.stderr.on("data", (data: Buffer | string) => (bufferError += data.toString()));
     ocpIndent1.stderr.on("end", () => {
-      session.error("ocpIndent1 error :" + bufferError);
+      session.error("ocpIndent1 error :" + bufferError.toString());
     });
 
-    session.log("buffer:" + buffer);
+    session.log("buffer:" + buffer.toString());
   });
 
   ocpIndent1.unref();
