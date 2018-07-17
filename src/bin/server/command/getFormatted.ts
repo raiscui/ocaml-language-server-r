@@ -3,6 +3,7 @@ import { refmt as refmtParser } from "../parser";
 import * as processes from "../processes";
 import Session from "../session";
 
+let mlLastDiagnostics: LSP.Diagnostic[] = [];
 export async function ocpIndent(session: Session, doc: LSP.TextDocument): Promise<null | string> {
   const text = doc.getText();
   const ocpIndent1 = new processes.OcpIndent(session).process;
@@ -20,10 +21,16 @@ export async function ocpIndent(session: Session, doc: LSP.TextDocument): Promis
 
     ocpIndent1.stderr.on("data", (data: Buffer | string) => (bufferError += data.toString()));
     ocpIndent1.stderr.on("end", () => {
-      session.error("ocpIndent1 error :" + bufferError.toString());
+      // if (bufferError !== "") session.error("ocpIndent error :" + bufferError);
+      const diagnostics = refmtParser.parseErrors(bufferError);
+      if (diagnostics.length !== 0 || diagnostics.length !== mlLastDiagnostics.length) {
+        session.connection.sendDiagnostics({
+          diagnostics,
+          uri: doc.uri,
+        });
+      }
+      mlLastDiagnostics = diagnostics;
     });
-
-    session.log("buffer:" + buffer.toString());
   });
 
   ocpIndent1.unref();
